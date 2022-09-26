@@ -5,13 +5,18 @@ import { setSummary } from '@/store/modules/summaryData';
 import { getEventData } from '@/utils/fetcher';
 
 // GET Event Endpoint
-export const useEventQuery = (eventNum: number) => {
+export const useEventQuery = (eventNum: number, type: string) => {
   const url = `/api/event_${eventNum}.json`;
   const dispatch = useDispatch();
   return useQuery(['getEventData', eventNum], () => getEventData(url), {
     onSuccess: data => {
-      const summary = data?.data.data;
-      dispatch(setSummary({ headers: summary.headers, rows: summary.rows }));
+      if (type === 'summary') {
+        const summary = data?.data.data;
+        const sortRows = summary.rows.sort(
+          (a: string[], b: string[]) => +new Date(b[0]) - +new Date(a[0])
+        );
+        dispatch(setSummary({ headers: summary.headers, rows: sortRows }));
+      }
     },
   });
 };
