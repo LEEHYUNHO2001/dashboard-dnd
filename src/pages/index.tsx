@@ -1,5 +1,7 @@
 import type { NextPage } from 'next';
 
-const Home: NextPage = () => <div>Home</div>;
+import { Dashboard } from '@/components';
+
+const Home: NextPage = () => <Dashboard />;
 
 export default Home;
