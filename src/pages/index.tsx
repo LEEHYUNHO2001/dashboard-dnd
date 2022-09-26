@@ -1,7 +1,14 @@
 import type { NextPage } from 'next';
 
 import { Dashboard } from '@/components';
+import { useEventQuery } from '@/hooks/query';
 
-const Home: NextPage = () => <Dashboard />;
+const Home: NextPage = () => {
+  const { isLoading, isFetching } = useEventQuery(1);
+
+  if (isLoading || isFetching) return <div>Loading...</div>;
+
+  return <Dashboard />;
+};
 
 export default Home;

@@ -1,13 +1,11 @@
-import React from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 
-import { useEventQuery } from '@/hooks/query';
+import { SummaryData } from '@/types';
 
 export const SummaryUnique = () => {
-  const { isLoading, isFetching, data } = useEventQuery(1);
+  const summary = useSelector(({ summaryData }: SummaryData) => summaryData || {}, shallowEqual);
 
-  if (isLoading || isFetching) return <div>Loading...</div>;
-
-  console.log(data);
+  console.log(summary);
 
   return <div>SummaryUnique</div>;
 };
