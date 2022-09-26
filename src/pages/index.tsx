@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-import { Dashboard } from '@/components';
+import { Dashboard } from '@/components/Dashboard';
 import { useEventQuery } from '@/hooks/query';
 
 const Home: NextPage = () => {

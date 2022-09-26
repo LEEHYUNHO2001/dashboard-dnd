@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { SummaryUnique } from '.';
+import { SummaryTotal, SummaryUnique } from '.';
 
 export const Dashboard = () => (
   <div>
     <SummaryUnique />
+    <SummaryTotal />
   </div>
 );
