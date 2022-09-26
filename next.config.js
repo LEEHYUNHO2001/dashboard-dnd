@@ -9,7 +9,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `http://localhost:9090/:path*`,
+        destination: `https://static.adbrix.io/front/coding-test/:path*`,
       },
     ];
   },

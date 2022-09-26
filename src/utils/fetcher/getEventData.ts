@@ -1,8 +1,7 @@
 import axios, { AxiosError, Method } from 'axios';
 
-export const getSummary = async () => {
+export const getEventData = async (url: string) => {
   try {
-    const url = 'https://static.adbrix.io/front/coding-test/event_1.json';
     const res = await axios({
       method: 'get' as Method,
       url,

@@ -1,1 +1,1 @@
-export * from './getSummary';
+export * from './getEventData';

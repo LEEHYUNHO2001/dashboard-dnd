@@ -1,10 +1,9 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 
-import { getSummary } from '@/utils/fetcher';
+import { useEventQuery } from '@/hooks/query';
 
 export const SummaryUnique = () => {
-  const { isLoading, isFetching, data } = useQuery(['getSummary'], getSummary);
+  const { isLoading, isFetching, data } = useEventQuery(1);
 
   if (isLoading || isFetching) return <div>Loading...</div>;
 
