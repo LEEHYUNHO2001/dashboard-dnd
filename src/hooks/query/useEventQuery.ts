@@ -5,7 +5,7 @@ import { setSummary } from '@/store/modules/summaryData';
 import { getEventData } from '@/utils/fetcher';
 
 // GET Event Endpoint
-export const useEventQuery = (eventNum: number, type: string) => {
+export const useEventQuery = (eventNum: number, type = '') => {
   const url = `/api/event_${eventNum}.json`;
   const dispatch = useDispatch();
   return useQuery(['getEventData', eventNum], () => getEventData(url), {
