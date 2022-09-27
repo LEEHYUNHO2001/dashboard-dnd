@@ -5,15 +5,14 @@ import { GridLayout } from '../GridLayout';
 
 export const Dashboard = () => (
   <Container>
-    {/* <SummaryUnique />
-    <SummaryTotal /> */}
     <GridLayout />
   </Container>
 );
 
 const Container = styled.div`
-  overflow: scroll;
+  overflow-y: scroll;
   width: 100%;
   height: 100vh;
+  padding: 0px 100px;
   background-color: #dee2e6;
 `;
