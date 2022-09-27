@@ -1,3 +1,5 @@
+import '@/styles/gridLayout.css';
+
 import { Global } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { QueryClientProvider } from 'react-query';
