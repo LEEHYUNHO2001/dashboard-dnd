@@ -4,6 +4,8 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { SummaryData } from '@/types';
 import { summaryIdx, summarySum } from '@/utils';
 
+import { Summary } from '../Common';
+
 export const SummaryUnique = () => {
   const summary = useSelector(({ summaryData }: SummaryData) => summaryData || {}, shallowEqual);
   const [unique, setUnique] = useState({ uniqueSum: 0, previous: 0 });
@@ -15,10 +17,5 @@ export const SummaryUnique = () => {
     setUnique({ uniqueSum, previous });
   }, []);
 
-  return (
-    <article>
-      <p>{unique.uniqueSum}</p>
-      <p>{unique.previous}</p>
-    </article>
-  );
+  return <Summary data={unique} />;
 };
