@@ -1,7 +1,10 @@
+import '@/styles/gridLayout.css';
+
 import { Global } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import { QueryClientProvider } from 'react-query';
 
+import { wrapper } from '@/store';
 import { reset } from '@/styles/Reset';
 import { queryClient } from '@/utils/query';
 
@@ -14,4 +17,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
