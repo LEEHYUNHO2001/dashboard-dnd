@@ -3,10 +3,11 @@ import styled from '@emotion/styled';
 interface Props {
   title: string;
   sum: number;
-  count: number;
+  count?: number;
   buttonLeft?: number;
-  click: boolean;
-  handleClick: () => void;
+  click?: boolean;
+  handleClick?: () => void;
+  titleLeft?: number;
 }
 
 interface BtnStyled {
@@ -14,16 +15,30 @@ interface BtnStyled {
   buttonLeft?: number;
 }
 
-export const ItemList = ({ title, sum, count, buttonLeft, click, handleClick }: Props) => (
+interface TitleStyled {
+  titleLeft?: number;
+}
+
+export const ItemList = ({
+  title,
+  sum,
+  count,
+  buttonLeft,
+  click = false,
+  handleClick,
+  titleLeft,
+}: Props) => (
   <ITemContainer>
     <ItemTitltContainer>
-      <Btn onClick={handleClick} click={click} buttonLeft={buttonLeft}>
-        {'>'}
-      </Btn>
-      <Title>{title}</Title>
-      <p>({sum})</p>
+      {count !== 0 && (
+        <Btn onClick={handleClick} click={click} buttonLeft={buttonLeft}>
+          {'>'}
+        </Btn>
+      )}
+      <Title titleLeft={titleLeft}>{title}</Title>
+      {count !== 0 && <p>({count})</p>}
     </ItemTitltContainer>
-    <ItemSum>{count}</ItemSum>
+    <ItemSum>{sum}</ItemSum>
   </ITemContainer>
 );
 
@@ -51,8 +66,8 @@ const Btn = styled.p<BtnStyled>`
   ${({ click }) => click && 'transform: rotate(90deg);-webkit-transform:rotate(90deg);'}
   border-radius: 50%;
 `;
-const Title = styled.p`
-  margin: 0px 10px;
+const Title = styled.p<TitleStyled>`
+  margin: 0px 10px 0px ${({ titleLeft }) => (titleLeft ? `${titleLeft}px` : '10px')};
 `;
 const ItemSum = styled.p`
   display: flex;

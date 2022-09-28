@@ -50,7 +50,7 @@ export const Country = ({ country, rest, countrySum, countryCount }: Props) => {
                 regionRest={regionRest}
                 regionSum={regionSum as number}
                 regionCount={regionCount as number}
-                buttonLeft={10}
+                buttonLeft={20}
               />
             );
           })}

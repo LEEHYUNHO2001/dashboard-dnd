@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 
-import { ItemList } from '.';
+import { City, ItemList } from '.';
+
+type CityType = [string, number];
 
 interface Props {
   regionText: string;
-  regionRest: { [key: string]: object } | number;
+  regionRest: { [key: string]: object } | { city: CityType } | number;
   regionSum: number;
   regionCount: number;
   buttonLeft?: number;
 }
 
 export const Region = ({ regionText, regionRest, regionSum, regionCount, buttonLeft }: Props) => {
+  const [cities, setCities] = useState<CityType[]>();
   const [click, setClick] = useState(false);
 
   const handleClick = () => {
@@ -18,17 +21,29 @@ export const Region = ({ regionText, regionRest, regionSum, regionCount, buttonL
   };
 
   useEffect(() => {
-    console.log(regionRest);
+    const isCity = typeof regionRest === 'number';
+    const rest = !isCity && regionRest.city;
+    setCities(rest as CityType[]);
   }, []);
 
   return (
-    <ItemList
-      title={regionText}
-      sum={regionSum}
-      count={regionCount}
-      click={click}
-      handleClick={handleClick}
-      buttonLeft={buttonLeft}
-    />
+    <li>
+      <ItemList
+        title={regionText}
+        sum={regionSum}
+        count={regionCount}
+        click={click}
+        handleClick={handleClick}
+        buttonLeft={buttonLeft}
+      />
+      {click && cities && (
+        <ul>
+          {cities.map(data => {
+            const [city, num] = data;
+            return <City key={`City-${city}-${num}`} city={city} num={num} />;
+          })}
+        </ul>
+      )}
+    </li>
   );
 };

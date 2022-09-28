@@ -29,8 +29,9 @@ export const transformSubTotal = (datas: string[][]) => {
 
       // region ect 처리
       if (!obj[1]) {
-        map[obj[0]].ect = 0;
-        map[obj[0]].ect = map[obj[0]].ect ? map[obj[0]].ect + num : num;
+        map[obj[0]].ect = map[obj[0]].ect
+          ? map[obj[0]].ect + parseInt(obj[3], 10)
+          : parseInt(obj[3], 10);
 
         // 객체에 region 존재하는지 판단 후 로직 수행
       } else if (!map[obj[0]][obj[1]]) {
