@@ -34,7 +34,7 @@ export const transformSubTotal = (datas: string[][]) => {
 
         // 객체에 region 존재하는지 판단 후 로직 수행
       } else if (!map[obj[0]][obj[1]]) {
-        map[obj[0]][obj[1]] = { regionSum: num, city: [[obj[2], num]] };
+        map[obj[0]][obj[1]] = { regionSum: num, regionCount: 1, city: [[obj[2], num]] };
       } else {
         // region이 있으면 regionSum부터 계산
         map[obj[0]][obj[1]].regionSum += num;

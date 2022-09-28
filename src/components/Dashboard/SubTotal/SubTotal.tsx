@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 
 import { useEventQuery } from '@/hooks/query';
+import { SubTotalData } from '@/types';
 
+import { Country } from './Country';
 import { transformSubTotal } from './helper';
-
-type SubTotalData = [string, { [key: string]: object } | number];
 
 export const SubTotal = () => {
   const { isLoading, isFetching, data } = useEventQuery(4);
@@ -21,21 +21,22 @@ export const SubTotal = () => {
 
   if (isLoading || isFetching) return <div>Loading...</div>;
 
-  console.log(subTotalData);
-
   return (
     <CountryContainer>
       {subTotalData?.map(data => {
         const [country, rest] = data;
         const isEct = typeof rest === 'number';
         const countrySum = isEct ? rest : rest.countrySum;
-        const countryCount = !isEct && rest.countryCount;
+        const countryCount = isEct ? 0 : rest.countryCount;
 
         return (
-          <ITemContainer key={`subTotalData-${country}-${countrySum}`}>
-            <ItemTitlt>{`${country} (${countryCount})`}</ItemTitlt>
-            <ItemSum>{countrySum as number}</ItemSum>
-          </ITemContainer>
+          <Country
+            key={`subTotalData-${country}-${countrySum}`}
+            country={country}
+            rest={rest}
+            countrySum={countrySum as number}
+            countryCount={countryCount as number}
+          />
         );
       })}
     </CountryContainer>
@@ -45,22 +46,4 @@ export const SubTotal = () => {
 const CountryContainer = styled.ul`
   overflow-y: scroll;
   height: 100%;
-`;
-const ITemContainer = styled.li`
-  display: flex;
-  border-top: 1px solid #e4e4e4;
-`;
-const ItemTitlt = styled.p`
-  display: flex;
-  align-items: center;
-  flex: 1;
-  height: 40px;
-`;
-const ItemSum = styled.p`
-  display: flex;
-  align-items: center;
-  flex: 1.3;
-  border-left: 1px solid #e4e4e4;
-  height: 40px;
-  padding-left: 20px;
 `;
