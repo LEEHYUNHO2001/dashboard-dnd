@@ -1,22 +1,28 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import Responsive, { WidthProvider } from 'react-grid-layout';
 
+import { gridLayout } from '@/constants';
+import { GridLayoutType } from '@/types';
+
 import { Box } from '../Common';
-import { Referral, SummaryChart, SummaryTotal, SummaryUnique } from '../Dashboard';
+import { Referral, SubTotal, SummaryChart, SummaryTotal, SummaryUnique } from '../Dashboard';
+import { getStorage, setStorage } from './helper';
 
 const ReactGridLayout = WidthProvider(Responsive);
 
 export const GridLayout = () => {
-  const layout = [
-    { i: 'unique', x: 0, y: 0, w: 8, h: 2, isResizable: true },
-    { i: 'total', x: 8, y: 0, w: 8, h: 2, isResizable: true },
-    { i: 'dau', x: 0, y: 2, w: 16, h: 3, isResizable: true },
-    { i: 'referral', x: 0, y: 5, w: 8, h: 3, isResizable: true },
-    { i: 'e', x: 8, y: 5, w: 8, h: 3, isResizable: true },
-  ];
+  const [layout, setLayout] = useState<GridLayoutType[]>(getStorage('layout') || gridLayout);
+
+  const onLayoutChange = (layout: GridLayoutType[]) => {
+    setStorage('layout', layout);
+    setLayout(layout);
+  };
+
   return (
     <Container
       layout={layout}
+      onLayoutChange={onLayoutChange}
       cols={16}
       rowHeight={100}
       maxRows={9}
@@ -42,6 +48,11 @@ export const GridLayout = () => {
       <div key="referral">
         <Box title="Top Referral">
           <Referral />
+        </Box>
+      </div>
+      <div key="subtotal">
+        <Box title="Top Referral">
+          <SubTotal />
         </Box>
       </div>
     </Container>
