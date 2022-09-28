@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { City, ItemList } from '.';
+import { SubTotalContext } from './Context';
 
 type CityType = [string, number];
 
@@ -15,6 +16,7 @@ interface Props {
 export const Region = ({ regionText, regionRest, regionSum, regionCount, buttonLeft }: Props) => {
   const [cities, setCities] = useState<CityType[]>();
   const [click, setClick] = useState(false);
+  const { sortNum } = useContext(SubTotalContext);
 
   const handleClick = () => {
     setClick(prev => !prev);
@@ -26,9 +28,11 @@ export const Region = ({ regionText, regionRest, regionSum, regionCount, buttonL
 
     const sortRest =
       rest &&
-      (rest as [string, number][]).sort((a: [string, number], b: [string, number]) => b[1] - a[1]);
+      (rest as [string, number][]).sort(
+        (a: [string, number], b: [string, number]) => (b[1] - a[1]) * sortNum
+      );
     setCities(sortRest as CityType[]);
-  }, []);
+  }, [sortNum]);
 
   return (
     <li>

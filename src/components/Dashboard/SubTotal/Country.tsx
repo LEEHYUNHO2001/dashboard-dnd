@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { SubTotalData } from '@/types';
 
 import { ItemList, Region } from '.';
+import { SubTotalContext } from './Context';
 
 type Rest = { [key: string]: number } | { [key: string]: object } | number;
 
@@ -16,6 +17,7 @@ interface Props {
 export const Country = ({ country, rest, countrySum, countryCount }: Props) => {
   const [region, setRegion] = useState<SubTotalData[]>();
   const [click, setClick] = useState(false);
+  const { sortNum } = useContext(SubTotalContext);
 
   const handleClick = () => {
     setClick(prev => !prev);
@@ -25,14 +27,12 @@ export const Country = ({ country, rest, countrySum, countryCount }: Props) => {
     const EntriesRest = Object.entries(rest)
       .sort(
         (a: [string, { regionSum: number }], b: [string, { regionSum: number }]) =>
-          b[1].regionSum - a[1].regionSum
+          (b[1].regionSum - a[1].regionSum) * sortNum
       )
       .filter(data => data[0] !== 'countrySum' && data[0] !== 'countryCount');
 
-    console.log(EntriesRest);
-
     setRegion(EntriesRest);
-  }, []);
+  }, [sortNum]);
 
   return (
     <li>
