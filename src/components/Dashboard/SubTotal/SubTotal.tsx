@@ -14,8 +14,15 @@ export const SubTotal = () => {
   useEffect(() => {
     if (data) {
       const rows = data?.data.data.rows;
-      const trnas = Object.entries(transformSubTotal(rows));
-      setSubTotalData(trnas as SubTotalData[]);
+      const trans = (Object.entries(transformSubTotal(rows)) as SubTotalData[]).sort(
+        (a: SubTotalData, b: SubTotalData) => {
+          const num1 = typeof a[1] === 'number' ? a[1] : a[1]?.countrySum;
+          const num2 = typeof b[1] === 'number' ? b[1] : b[1]?.countrySum;
+          return +num2 - +num1;
+        }
+      );
+
+      setSubTotalData(trans as SubTotalData[]);
     }
   }, [isLoading]);
 

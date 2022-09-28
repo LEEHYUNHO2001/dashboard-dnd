@@ -23,7 +23,11 @@ export const Region = ({ regionText, regionRest, regionSum, regionCount, buttonL
   useEffect(() => {
     const isCity = typeof regionRest === 'number';
     const rest = !isCity && regionRest.city;
-    setCities(rest as CityType[]);
+
+    const sortRest =
+      rest &&
+      (rest as [string, number][]).sort((a: [string, number], b: [string, number]) => b[1] - a[1]);
+    setCities(sortRest as CityType[]);
   }, []);
 
   return (

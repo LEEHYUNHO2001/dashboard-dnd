@@ -5,4 +5,6 @@ interface Props {
   num: number;
 }
 
-export const City = ({ city, num }: Props) => <ItemList title={city} sum={num} titleLeft={70} />;
+export const City = ({ city, num }: Props) => (
+  <ItemList title={city} sum={num} count={0} titleLeft={50} />
+);

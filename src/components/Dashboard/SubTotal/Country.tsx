@@ -4,8 +4,10 @@ import { SubTotalData } from '@/types';
 
 import { ItemList, Region } from '.';
 
+type Rest = { [key: string]: number } | { [key: string]: object } | number;
+
 interface Props {
-  rest: { [key: string]: object } | number;
+  rest: Rest;
   country: string;
   countrySum: number;
   countryCount: number;
@@ -20,9 +22,15 @@ export const Country = ({ country, rest, countrySum, countryCount }: Props) => {
   };
 
   useEffect(() => {
-    const EntriesRest = Object.entries(rest).filter(
-      data => data[0] !== 'countrySum' && data[0] !== 'countryCount'
-    );
+    const EntriesRest = Object.entries(rest)
+      .sort(
+        (a: [string, { regionSum: number }], b: [string, { regionSum: number }]) =>
+          b[1].regionSum - a[1].regionSum
+      )
+      .filter(data => data[0] !== 'countrySum' && data[0] !== 'countryCount');
+
+    console.log(EntriesRest);
+
     setRegion(EntriesRest);
   }, []);
 
