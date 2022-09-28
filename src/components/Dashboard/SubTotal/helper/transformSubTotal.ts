@@ -12,8 +12,12 @@ export const transformSubTotal = (datas: string[][]) => {
       // ex: { kr: { countrySum:119, seoul: { regionSum:119, city:['guro-gu', 119] } } }
       const num = parseInt(obj[3], 10);
       map[obj[0]] = obj[1]
-        ? { countrySum: num, [obj[1]]: { regrionSum: num, city: [[obj[2], num]] } }
-        : { countrySum: num, ect: num };
+        ? {
+            countrySum: num,
+            countryCount: 1,
+            [obj[1]]: { regionSum: num, regionCount: 1, city: [[obj[2], num]] },
+          }
+        : { countrySum: num, countryCount: 1, ect: num };
 
       // 객체에 country는 있는 경우
     } else {
@@ -21,6 +25,7 @@ export const transformSubTotal = (datas: string[][]) => {
 
       // country가 있으면 countrySum부터 계산
       map[obj[0]].countrySum += num;
+      map[obj[0]].countryCount += 1;
 
       // region ect 처리
       if (!obj[1]) {
@@ -29,10 +34,11 @@ export const transformSubTotal = (datas: string[][]) => {
 
         // 객체에 region 존재하는지 판단 후 로직 수행
       } else if (!map[obj[0]][obj[1]]) {
-        map[obj[0]][obj[1]] = { regrionSum: num, city: [[obj[2], num]] };
+        map[obj[0]][obj[1]] = { regionSum: num, city: [[obj[2], num]] };
       } else {
-        // region이 있으면 regrionSum부터 계산
-        map[obj[0]][obj[1]].regrionSum += num;
+        // region이 있으면 regionSum부터 계산
+        map[obj[0]][obj[1]].regionSum += num;
+        map[obj[0]][obj[1]].regionCount += 1;
 
         // city ect 처리
         map[obj[0]][obj[1]].city = obj[2]
